@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration Form</title>
+    <style>
+        .error {
+            color: red;
+            font-size: 14px;
+            display: none;
+        }
+        button:disabled {
+            background-color: gray;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+
+<form id="registerForm">
+    <h1>Registration form</h1>
+    <input type="text" id="name" placeholder="Name">
+    <div class="error" id="nameError">Name is required</div>
+    <br><br>
+
+    <input type="email" id="email" placeholder="Email">
+    <div class="error" id="emailError">Enter a valid email</div>
+    <br><br>
+
+    <input type="password" id="password" placeholder="Password">
+    <div class="error" id="passwordError">Password must be at least 6 characters</div>
+    <br><br>
+
+    <button type="submit" id="submitBtn" disabled>Register</button>
+</form>
+
+<script>
+    const nameInput = document.getElementById("name");
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
+    const submitBtn = document.getElementById("submitBtn");
+
+    const nameError = document.getElementById("nameError");
+    const emailError = document.getElementById("emailError");
+    const passwordError = document.getElementById("passwordError");
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    function validateForm() {
+        let isValid = true;
+
+        // Name validation
+        if (nameInput.value.trim() === "") {
+            nameError.style.display = "block";
+            isValid = false;
+        } else {
+            nameError.style.display = "none";
+        }
+
+        // Email validation
+        if (!emailRegex.test(emailInput.value)) {
+            emailError.style.display = "block";
+            isValid = false;
+        } else {
+            emailError.style.display = "none";
+        }
+
+        // Password validation
+        if (passwordInput.value.length < 6) {
+            passwordError.style.display = "block";
+            isValid = false;
+        } else {
+            passwordError.style.display = "none";
+        }
+
+        submitBtn.disabled = !isValid;
+    }
+
+    nameInput.addEventListener("input", validateForm);
+    emailInput.addEventListener("input", validateForm);
+    passwordInput.addEventListener("input", validateForm);
+
+    document.getElementById("registerForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+        alert("Registration Successful!");
+    });
+</script>
+
+</body>
+</html>
